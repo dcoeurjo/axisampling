@@ -23,7 +23,7 @@ void drawFrame(svg::Document & doc,
                unsigned int width, unsigned int height)
 {
   double factor = (i*i/((double)width*width)+j*j/((double)height*height));
-  double theta=0.0;//M_PI_4*factor;
+  double theta=M_PI_4*factor;
   svg::Point center(i,j);
   
   svg::Fill fill(svg::Color::Black);
@@ -36,7 +36,7 @@ void drawFrame(svg::Document & doc,
   for(auto s:samples)
   {
     svg::Point sample(svg::Point(center.x + fmod(dx + s[0],1)*size, center.y + fmod(dy + s[1],1.0)*size) );
-    doc << svg::Circle(rot(sample,theta,center), 10, fill, svg::Stroke(1, svg::Color::Black));
+    doc << svg::Circle(rot(sample,theta,center), size/15.0, fill, svg::Stroke(1, svg::Color::Black));
   }
   
   svg::Polygon frame(svg::Stroke(1, svg::Color::Blue));
@@ -71,6 +71,7 @@ int main(int argc, char** argv)
 
   initSamplers();
 
+ 
   auto getDensity=[&](unsigned int i, unsigned int j){
     double val = 0;
     for(auto y=j; y < std::min((unsigned int)height,j+gridSize);++y)
@@ -81,13 +82,24 @@ int main(int argc, char** argv)
       unsigned char g = source[ indexPixel + 1];
       unsigned char b = source[ indexPixel + 2];
       val += (r+g+b)/3.0;
+     
     }
-    return val/(gridSize*gridSize);
+    val /= (double)(gridSize*gridSize);
+    return val;
   };
   
+  double mmax=0.0;
+  double mmin=255.0;
+  for(auto j=0u; j < height ; j+=gridSize )
+   for(auto i=0u; i < width ; i+=gridSize )
+  {
+    auto val= getDensity(i,j);
+    mmin=std::min(mmin,val);
+    mmax=std::max(mmax,val);
+  }
   for(auto j=0u; j < height ; j+=gridSize )
     for(auto i=0u; i < width ; i+=gridSize )
-      drawFrame(doc, i, j, getDensity(i,j) / 10.0, gridSize, width, height);
+      drawFrame(doc, i, j, (getDensity(i,j)-mmin)/(mmax-mmin)*100.0, gridSize, width, height);
   
   doc.save();
   

@@ -1,6 +1,6 @@
 /*
  Copyright (c)
- David Coeurjolly <david.coeurjolly@gmail.com>
+ David Coeurjolly <david.coeurjolly@liris.cnrs.fr>
  
  All rights reserved.
  

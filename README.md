@@ -1,8 +1,8 @@
 Image stippling to SVG
 ===
 
-This code creates stippling effects using [low discrepancy blue noise](https://github.com/dcoeurjo/LowDiscBlueNoise). The output is a valid SVG file you
-can plot using an axis plotter for instance.
+This code creates stippling effects using [low discrepancy blue noise](https://github.com/dcoeurjo/LowDiscBlueNoise) sampling. The output is a valid SVG file you
+can plot using an axis plotter.
 
 Have a look the command line options for more details.
 

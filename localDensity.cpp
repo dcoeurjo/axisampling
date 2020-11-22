@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 {
   CLI::App app{"localDensit"};
   std::string inputFilename;
-  app.add_option("-i,--input", inputFilename, "Input image filename")->required()->check(CLI::ExistingFile);;
+  app.add_option("-i,--input", inputFilename, "Input image filename (RGB/RGBA)")->required()->check(CLI::ExistingFile);;
   std::string outputFilename= "output.svg";
   app.add_option("-o,--output", outputFilename, "Output SVG filename")->required();
   unsigned int gridSize=10;
